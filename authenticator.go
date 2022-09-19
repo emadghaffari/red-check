@@ -3,6 +3,7 @@ package authenticator
 import (
 	"context"
 	"encoding/json"
+
 	"github.com/go-redis/redis/v8"
 )
 
@@ -81,14 +82,14 @@ func (a *Authenticator) Get(ctx context.Context, key string) Result {
 	return resp
 }
 
-func(a *Authenticator) IsExist(ctx context.Context, key string) bool {
-	i,err := a.client.Exists(ctx,key).Result()
+func (a *Authenticator) IsExist(ctx context.Context, key string) (bool, error) {
+	i, err := a.client.Exists(ctx, key).Result()
 	if err != nil {
-		return false
+		return true, err
 	}
 
-	return (i == 1)
-	
+	return (i == 1), nil
+
 }
 
 func (a *Authenticator) Error() error {
