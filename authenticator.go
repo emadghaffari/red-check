@@ -85,7 +85,7 @@ func (a *Authenticator) Get(ctx context.Context, key string) Result {
 func (a *Authenticator) IsExist(ctx context.Context, key string) (bool, error) {
 	i, err := a.client.Exists(ctx, key).Result()
 	if err != nil {
-		return true, err
+		return false, err
 	}
 
 	return (i == 1), nil
